@@ -30,9 +30,11 @@ def Alerta_Ficheros(variables, directorio, t_minimo):
 
     if archivos_grandes:
         # Crear DataFrame y guardar en Excel
-        df = pd.DataFrame(archivos_grandes, columns=['Nombre', 'Ruta', 'Tamaño (bytes)'])        
+        df = pd.DataFrame(archivos_grandes, columns=['Nombre', 'Ruta', 'Tamaño (bytes)'])
+        df_ordenado = df.sort_values(by='Tamaño (bytes)', ascending=False)
+
         archivo_excel = 'archivos_grandes.xlsx'
-        df.to_excel(archivo_excel, index=False)
+        df_ordenado.to_excel(archivo_excel, index=False)
 
         alerta = f'ALERTA - {len(archivos_grandes)} archivos de más de {tamano} Gb. detectados en {directorio}'
         mensaje = f"Se han encontrado {len(archivos_grandes)} archivos mayores de {tamano} Gb."

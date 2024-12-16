@@ -26,5 +26,5 @@ var = Variables()
 Alerta_MD(var)
 
 #  Analizamos ficheros en DIRECTORIO mayores de T_MINIMO 
-T_MINIMO = 5 * 1024 * 1024 * 1024      # 2 GB en bytes
+T_MINIMO = 6 * 1024 * 1024 * 1024      # 6 GB en bytes
 Alerta_Ficheros(var, DIRECTORIO, T_MINIMO)
