@@ -11,7 +11,8 @@ else:
 
 from Herramientas.variables import Variables
 from alerta_MD import Alerta_MD
-from alerta_ficheros import Alerta_Ficheros
+# from alerta_ficheros import Alerta_Ficheros       # Genera fichero excel
+from alerta_ficheros_sheet import Alerta_Ficheros   # Actualiza hoja de cálculo
 
 
 
@@ -26,5 +27,5 @@ var = Variables()
 Alerta_MD(var)
 
 #  Analizamos ficheros en DIRECTORIO mayores de T_MINIMO 
-T_MINIMO = 6 * 1024 * 1024 * 1024      # 6 GB en bytes
+T_MINIMO = 6 * 1024 * 1024 * 1024      # 2 GB en bytes
 Alerta_Ficheros(var, DIRECTORIO, T_MINIMO)
