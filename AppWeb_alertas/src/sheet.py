@@ -51,7 +51,7 @@ def RecuperarCartera2():
     cartera = cartera[cartera['Fecha'] == cartera['Fecha'].max()]
 
     cartera = cartera.drop(['Fecha','Tipo', 'Subtipo', 'Importe', 'Rent.', '% Rent', 'Saldo', '', 
-                            'AñoMes', 'Previsión', 'Abierta'], axis=1)
+                            'AñoMes', 'Abierta'], axis=1)
     cartera.rename(columns={'P. Venta/Ant.': 'P. Ant.'}, inplace=True)
     cartera = cartera[['Descripción', 'Entidad', 'Producto', 'Num.', 'Precio', 'P. Ant.',
        'Tipo Act.', 'Ticker']]

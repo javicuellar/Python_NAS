@@ -1,11 +1,11 @@
 #  Análisis de los ficheros del directorio enviando alerta mail con los ficheros mayores de x bytes.
 # ---------------------------------------------------------------------------------------------------
-from Herramientas.sheet import Actualizar_Hoja
 from Herramientas.mail import Envio_mail_adjunto
 
 
 import os, sys
 import pandas as pd
+
 
 
 
@@ -24,21 +24,22 @@ def buscar_archivos_grandes(directorio, t_minimo):
 
 
 #  Alerta de Ficheros mayores de T_MINIMO
-def Alerta_Ficheros_sheet(directorio, t_minimo):
+def Alerta_Ficheros(variables, directorio, t_minimo):
     archivos_grandes = buscar_archivos_grandes(directorio, t_minimo)
     tamano = round(t_minimo / (1024 * 1024 * 1024), 2)
 
     if archivos_grandes:
         # Crear DataFrame y guardar en Excel
         df = pd.DataFrame(archivos_grandes, columns=['Nombre', 'Ruta', 'Tamaño (bytes)'])
-        df = df.sort_values(by='Tamaño (bytes)', ascending=False)
-        # archivo_excel = 'archivos_grandes.xlsx'
-        # df.to_excel(archivo_excel, index=False)
-        Actualizar_Hoja('Archivos Grandes', df)
+        df_ordenado = df.sort_values(by='Tamaño (bytes)', ascending=False)
+
+        archivo_excel = 'archivos_grandes.xlsx'
+        df_ordenado.to_excel(archivo_excel, index=False)
 
         alerta = f'ALERTA - {len(archivos_grandes)} archivos de más de {tamano} Gb. detectados en {directorio}'
         mensaje = f"Se han encontrado {len(archivos_grandes)} archivos mayores de {tamano} Gb."
         print(mensaje)
+        Envio_mail_adjunto(variables.usuario, variables.password , alerta, mensaje, variables.destinatario, archivo_excel)
     else:
         print(f'No se encontraron archivos mayores de {tamano} Gb.')
 
@@ -53,6 +54,10 @@ if __name__ == '__main__':
     else:
         DIRECTORIO = '/video'
 
+    from Herramientas.variables import Variables
+    
+    var = Variables() 
+    
     #  Analizamos ficheros en DIRECTORIO mayores de T_MINIMO 
     T_MINIMO = 2 * 1024 * 1024 * 1024      # 2 GB en bytes
-    Alerta_Ficheros_sheet(DIRECTORIO, T_MINIMO)
+    Alerta_Ficheros(var, DIRECTORIO, T_MINIMO)

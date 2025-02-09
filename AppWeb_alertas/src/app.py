@@ -145,11 +145,8 @@ def cartera_completa():
     cuentas = df[(df['Producto']== 'Cuenta')]
     cuentas_html = cuentas.to_html(classes='table table-striped', index=False)
     
-    total = df[(df['Producto']== 'TOTAL')]
-    total_html = total.to_html(classes='table table-striped', index=False)
-    
     return render_template('cartera_completa.html', acciones=acciones_html, etfs=etfs_html, pensiones=pensiones_html,
-                                            cuentas=cuentas_html, total=total_html)
+                                            cuentas=cuentas_html)
 
 
 @app.route('/cartera')
